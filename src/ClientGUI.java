@@ -3,7 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,14 +35,14 @@ public class ClientGUI extends JFrame {
         panel.add(xline);
         panel.add(yline);
         for (Policeman policemen : Client.set.copyOnWriteArraySet){
-            System.out.println(workJSON.toJSON(policemen));
+            System.out.println(WorkJSON.toJSON(policemen));
             MyButton button = new MyButton();
             button.setAge(policemen.getAge());
             button.setName(policemen.getName());
-            int x = 500 + policemen.x2;
-            int y = 500 - policemen.y2;
-            int w = policemen.x3-policemen.x1;
-            int h = policemen.y2-policemen.y1;
+            int x = 500 + policemen.getX1()+policemen.getHeight();
+            int y = 500 - policemen.getY1();
+            int w = policemen.getWidth();
+            int h = policemen.getHeight();
             Colours colour = Colours.valueOf(policemen.getColour().toUpperCase());
             Rectangle bounds = new Rectangle(x, y, w, h);
             button.setBounds(bounds);
@@ -458,7 +461,41 @@ public class ClientGUI extends JFrame {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    
+                Client.getClient().receiveCollection();
+                panel.removeAll();
+                panel.add(xline);
+                panel.add(yline);
+                for (Policeman policemen : Client.set.copyOnWriteArraySet){
+                    System.out.println(WorkJSON.toJSON(policemen));
+                    MyButton button = new MyButton();
+                    button.setAge(policemen.getAge());
+                    button.setName(policemen.getName());
+                    int x = 500 + policemen.getX1()+policemen.getHeight();
+                    int y = 500 - policemen.getY1();
+                    int w = policemen.getWidth();
+                    int h = policemen.getHeight();
+                    Colours colour = Colours.valueOf(policemen.getColour().toUpperCase());
+                    Rectangle bounds = new Rectangle(x, y, w, h);
+                    button.setBounds(bounds);
+                    button.setToolTipText("Name: "+ policemen.getName() + ", Age: " + policemen.getAge());
+                    switch(colour){
+                        case BLUE:
+                            button.setBackground(Color.BLUE);
+                            break;
+                        case GREEN:
+                            button.setBackground(Color.GREEN);
+                            break;
+                        case YELLOW:
+                            button.setBackground(Color.YELLOW);
+                            break;
+                        default:
+                            button.setBackground(Color.WHITE);
+                            break;
+                    }
+                    panel.add(button);
+                    panel.repaint();
+                    container.repaint();
+                }
             }
         });
 

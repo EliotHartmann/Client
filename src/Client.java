@@ -1,14 +1,22 @@
 import java.io.*;
 import java.net.*;
-import java.util.Collection;
 import java.util.Date;
 
 public class Client {
-    private Socket socket;
-    static String answer;
-    static public boolean ready;
-    WorkJSON workJSON = new WorkJSON();
-     public static ConcurrentPolicemanSet<Policeman> set = new ConcurrentPolicemanSet<Policeman>(new Date());
+    private static Client client;
+    private static Socket socket;
+    public static ConcurrentPolicemanSet<Policeman> set = new ConcurrentPolicemanSet<Policeman>(new Date());
+
+    public static Client getClient(){
+        if(client == null){
+            client = new Client();
+        }
+        return client;
+    }
+
+    private Client(){
+
+    }
 
     public void createClient(int port) {
         try {
@@ -20,33 +28,27 @@ public class Client {
         }
     }
 
-    public void run() throws IOException {
+    private void run() throws IOException {
+            receiveCollection();
+    }
+
+    public void receiveCollection(){
         int n = 0;
         String string;
         try {
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintStream ps = new PrintStream(socket.getOutputStream());
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintStream ps = new PrintStream(socket.getOutputStream());
             try {
-                    System.out.println(br.readLine());
-                    n = Integer.parseInt(br.readLine());
-                    System.out.println(n);
-                for(int i=0; i<n; i++){
+                ps.println("start");
+                ps.flush();
+                while (true){
                     string = br.readLine();
-                    set.copyOnWriteArraySet.add(workJSON.intoJSON(string));
-                    System.out.println(string);
+                    if(!string.equals("end")) {
+                        Client.set.copyOnWriteArraySet.add(WorkJSON.intoJSON(string));
+                        System.out.println(string);
+                    }else
+                        break;
                 }
-//                while (true){
-//                    if(LoginGUI.ready){
-//                        ps.println(LoginGUI.login);
-//                        ps.flush();
-//                        ps.println(LoginGUI.pswd);
-//                        ps.flush();
-//                        ps.close();
-//                        break;
-//                    }
-//                }
-//                answer = br.readLine();
-//                ready = true;
 
             }catch (IOException e){
                 e.printStackTrace();
@@ -54,6 +56,53 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String checkCombination(String login, String pswd){
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintStream ps = new PrintStream(socket.getOutputStream());
+            ps.println("check");
+            System.out.println("check");
+            ps.flush();
+            ps.println(login);
+            System.out.println(login);
+            ps.flush();
+            ps.println(pswd);
+            System.out.println(pswd);
+            ps.flush();
+            String string;
+            while (true){
+                string = br.readLine();
+                if(!string.equals(""))
+                    break;
+            }
+
+            System.out.println(string);
+            return string;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "IOE";
+        }
+
+    }
+
+    public void signUp(String login, String pswd){
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintStream ps = new PrintStream(socket.getOutputStream());
+            ps.println("new");
+            ps.flush();
+            ps.println(login);
+            System.out.println(login);
+            ps.flush();
+            ps.println(pswd);
+            System.out.println(pswd);
+            ps.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

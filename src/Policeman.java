@@ -1,20 +1,30 @@
 import java.io.Serializable;
 import java.awt.Rectangle;
+
+
 public class Policeman implements Serializable{
     private int healthPoint;
     private String name;
     private int age;
     private String describition = "Вооруженные до зубов";
     private int ID;
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-    int x3;
-    int y3;
-    int x4;
-    int y4;
+    private int x1;
+    private int y1;
+    private int height;
+    private int width;
+
     private String colour;
+
+    Policeman(PolicemanBuilder policemanBuilder){
+        this.name = policemanBuilder.getName();
+        this.age = policemanBuilder.getAge();
+        this.colour = policemanBuilder.getColour();
+        this.x1 = policemanBuilder.getX1();
+        this.y1 = policemanBuilder.getY1();
+        this.height = policemanBuilder.getHeight();
+        this.width = policemanBuilder.getWidth();
+    }
+
 
     public int getX1() {
         return x1;
@@ -24,43 +34,12 @@ public class Policeman implements Serializable{
         return y1;
     }
 
-    public int getX2() {
-        return x2;
+    public int getHeight() {
+        return height;
     }
 
-    public int getY2() {
-        return y2;
-    }
-
-    public int getX3() {
-        return x3;
-    }
-
-    public int getY3() {
-        return y3;
-    }
-
-    public int getX4() {
-        return x4;
-    }
-
-    public int getY4() {
-        return y4;
-    }
-
-
-    Policeman(String name, int age, String colour){
-        this.name = name;
-        this.age = age;
-        this.colour = colour;
-        this.x1 = (int)(Math.random()*750);
-        this.y1 = (int)(Math.random()*750);
-        this.x2 = x1;
-        this.y2 = y1 + (int)(Math.random()*200);
-        this.x3 = x2 + (int)(Math.random()*200);
-        this.y3 = y2;
-        this.x4 = x3;
-        this.y4 = y1;
+    public int getWidth() {
+        return width;
     }
 
     public String getColour() {
@@ -93,6 +72,7 @@ public class Policeman implements Serializable{
 
 
 
+
     public String toFall(){
         this.healthPoint = healthPoint - 20;
         if (healthPoint <= 0)
@@ -111,6 +91,7 @@ public class Policeman implements Serializable{
         this.healthPoint = 0;
         return this.name + " утонул";
     }
+
 
 
 
@@ -159,4 +140,3 @@ public class Policeman implements Serializable{
         return name.equals(other.name) &&  healthPoint == other.healthPoint;
     }
 }
-
