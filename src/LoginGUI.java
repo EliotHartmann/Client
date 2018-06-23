@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 
-    class LoginGUI extends JFrame{
+class LoginGUI extends JFrame {
     private String answer;
     private MyDialog errorDialog;
 
-    LoginGUI(){
+    LoginGUI() {
         setSize(600, 400);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -17,7 +17,7 @@ import java.awt.*;
         JLabel pwdlbl = new JLabel("Password:");
         JButton submitbtn = new JButton("Log in");
         JButton signUpbtn = new JButton("Sign up");
-        JPanel formPanel = new JPanel(new GridLayout(6,1));
+        JPanel formPanel = new JPanel(new GridLayout(6, 1));
         formPanel.add(loginlbl);
         formPanel.add(logintxt);
         formPanel.add(pwdlbl);
@@ -29,14 +29,14 @@ import java.awt.*;
         submitbtn.addActionListener(e -> {
             errorDialog = new MyDialog(LoginGUI.this, "Invalid login/password combination");
             answer = Client.getClient().checkCombination(logintxt.getText(), pwdtxt.getText());
-            if(answer.equals("true")){
+            if (answer.equals("true")) {
                 SwingUtilities.invokeLater(ClientGUI::new);
                 setVisible(false);
-            }else if(answer.equals("false")){
+            } else if (answer.equals("false")) {
                 errorDialog.setVisible(true);
                 logintxt.setText("");
                 pwdtxt.setText("");
-            }else if(answer.equals("ban")){
+            } else if (answer.equals("ban")) {
                 MyDialog banDialog = new MyDialog(LoginGUI.this, "You are permanenly banned on server");
                 banDialog.setVisible(true);
                 logintxt.setText("");
@@ -49,6 +49,6 @@ import java.awt.*;
             Client.getClient().signUp(logintxt.getText(), pwdtxt.getText());
             successDialog.setVisible(true);
         });
-    setVisible(true);
-}
+        setVisible(true);
+    }
 }
