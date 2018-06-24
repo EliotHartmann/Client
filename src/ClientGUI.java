@@ -3,28 +3,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.locks.ReadWriteLock;
 
 public class ClientGUI extends JFrame {
 
-
     ClientGUI(){
-        super("ClientGUI");
+        setTitle(LoginGUI.cuBundle.getString("mainTitle"));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel panel = new JPanel(null);
 
         panel.setBounds(0, 0, 1000, 1000);
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         Container container = this.getContentPane();
-        WorkJSON workJSON = new WorkJSON();
-
         System.out.println(Client.set.copyOnWriteArraySet.size());
 
         // ******************************************************
@@ -46,7 +36,7 @@ public class ClientGUI extends JFrame {
             Colours colour = Colours.valueOf(policemen.getColour().toUpperCase());
             Rectangle bounds = new Rectangle(x, y, w, h);
             button.setBounds(bounds);
-            button.setToolTipText("Name: "+ policemen.getName() + ", Age: " + policemen.getAge());
+            button.setToolTipText(LoginGUI.cuBundle.getString("Name") + " " + policemen.getName() + ", " + LoginGUI.cuBundle.getString("Age") + " " + policemen.getAge());
             switch(colour){
                 case BLUE:
                     button.setBackground(Color.BLUE);
@@ -66,9 +56,9 @@ public class ClientGUI extends JFrame {
         // *********************************************************
 
 
-        JCheckBox greenBox = new JCheckBox("Green");
-        JCheckBox yellowBox = new JCheckBox("Yellow");
-        JCheckBox blueBox = new JCheckBox("Blue");
+        JCheckBox greenBox = new JCheckBox(LoginGUI.cuBundle.getString("GREEN"));
+        JCheckBox yellowBox = new JCheckBox(LoginGUI.cuBundle.getString("YELLOW"));
+        JCheckBox blueBox = new JCheckBox(LoginGUI.cuBundle.getString("BLUE"));
 
         GridLayout layout = new GridLayout(1, 3, 5, 12);
         JPanel boxPanel = new JPanel();
@@ -89,17 +79,17 @@ public class ClientGUI extends JFrame {
 
 
         sliderPanel.add(ageSlider);
-        sliderPanel.add(new JLabel("Age"));
+        sliderPanel.add(new JLabel(LoginGUI.cuBundle.getString("Age")));
         filterPanel.add(sliderPanel);
 
         TextField name = new TextField(10);
         JPanel namePanel = new JPanel();
         namePanel.add(name);
-        namePanel.add(new JLabel("Name"));
+        namePanel.add(new JLabel(LoginGUI.cuBundle.getString("Name")));
         filterPanel.add(namePanel);
 
 
-        JButton startButton = new JButton("Start");
+        JButton startButton = new JButton(LoginGUI.cuBundle.getString("start"));
         startButton.addActionListener(e -> {
 
 
@@ -457,7 +447,7 @@ public class ClientGUI extends JFrame {
                 });
 
 
-        JButton updateButton = new JButton("Update");
+        JButton updateButton = new JButton(LoginGUI.cuBundle.getString("update"));
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -477,7 +467,7 @@ public class ClientGUI extends JFrame {
                     Colours colour = Colours.valueOf(policemen.getColour().toUpperCase());
                     Rectangle bounds = new Rectangle(x, y, w, h);
                     button.setBounds(bounds);
-                    button.setToolTipText("Name: "+ policemen.getName() + ", Age: " + policemen.getAge());
+                    button.setToolTipText(LoginGUI.cuBundle.getString("Name") + " " + policemen.getName() + ", " + LoginGUI.cuBundle.getString("Age") + policemen.getAge());
                     switch(colour){
                         case BLUE:
                             button.setBackground(Color.BLUE);

@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.awt.Rectangle;
+import java.time.LocalDateTime;
 
 
 public class Policeman implements Serializable{
@@ -12,6 +13,8 @@ public class Policeman implements Serializable{
     private int y1;
     private int height;
     private int width;
+    LocalDateTime createTime;
+
 
     private String colour;
 
@@ -23,6 +26,7 @@ public class Policeman implements Serializable{
         this.y1 = policemanBuilder.getY1();
         this.height = policemanBuilder.getHeight();
         this.width = policemanBuilder.getWidth();
+        this.createTime = policemanBuilder.getCreateTime();
     }
 
 

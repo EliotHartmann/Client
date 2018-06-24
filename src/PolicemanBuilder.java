@@ -1,6 +1,7 @@
+import java.time.LocalDateTime;
+import java.util.Locale;
 
-
-    public class PolicemanBuilder {
+public class PolicemanBuilder {
         private int healthPoint;
         private String name;
         private String colour;
@@ -10,6 +11,8 @@
         private int y1;
         private int height;
         private int width;
+        LocalDateTime createTime;
+
 
         public PolicemanBuilder name(String name){
             this.name = name;
@@ -40,8 +43,16 @@
             this.width = width;
             return this;
         }
+    public  PolicemanBuilder createTime(){
+        this.createTime = LocalDateTime.now();
+        return this;
+    }
 
-        public Policeman build(){
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public Policeman build(){
             return new Policeman(this);
         }
 
